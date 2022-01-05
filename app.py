@@ -7,9 +7,11 @@ from datetime import date
 import json
 from bson.json_util import dumps, loads
 from bson import json_util
+from flask_cors import CORS
 
 # creating the flask app
 app = Flask(__name__)
+CORS(app)
 # creating an API object
 api = Api(app)
 app.config['MONGO_URI'] = 'mongodb+srv://flask:flask@cluster0.zjwhk.mongodb.net/flaskpython?retryWrites=true&w=majority'
