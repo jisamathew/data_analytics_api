@@ -1,0 +1,46 @@
+<!-- <!doctype html>
+<html>
+ <body>
+  <h1>Hello Plotly </h1>
+  <div id='chart' class='chart'”></div>
+</body>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+  var graphs = {{graphJSON | safe}};
+  Plotly.plot('chart',graphs,{});
+</script>
+</html> -->
+
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Python Flask Data Preprocessing Tool -Kottackal</title>
+{% endblock %}
+
+{% block body %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Python Flask Data Preprocessing Tool -Kottackal</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item active">Chart Display Based on Malicious Fields</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div id='chartC' class='chart'”></div>
+
+    </section>
+
+</main>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+  var graphsC = {{graphJSON | safe}};
+  Plotly.plot('chartC',graphsC,{});
+</script>
+{% endblock %}
+

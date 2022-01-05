@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Python Flask Data Preprocessing Tool -Kottackal</title>
+{% endblock %}
+
+{% block body %}
+<main id="main" class="main">    
+
+  <div class="pagetitle">
+    <h1>Data Analytics Tool</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">TradeTrip</a></li>
+        <!-- <li class="breadcrumb-item">Pages</li> -->
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <!-- <div class="col-lg-6">   -->
+        <div class="card">
+        <div class="card-body">
+          <!-- <h5 class="card-title">Upload Dataset to the platform</h5>
+          <form action="data" method="post">
+            <div class="row mb-3">
+              <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="file" name="uploadfile" value="">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" name="" value="Submit">
+              </div>
+            </div>
+          </form> -->
+
+          <h5 class="card-title">Transaction Data History </h5>
+
+          <form action="getDB" method="get">
+            
+            <div class="row mb-3">
+              <label for="inputNumber" class="col-sm-2 col-form-label">Get Transaction Data</label>
+              <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" name="" value="Submit">
+                <!-- <input class="form-control" type="file" name="uploadfile" value=""> -->
+              </div>
+            </div>
+         
+            <!-- <div class="row mb-3">
+              <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" name="" value="Submit">
+              </div>
+            </div> -->
+
+          </form>
+          <!-- <form action="lookupDB" method="get">
+            
+            <div class="row mb-3">
+              <label for="inputNumber" class="col-sm-2 col-form-label">Get LookUP Data from Database</label>
+              <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" name="" value="Submit">
+                <!-- <input class="form-control" type="file" name="uploadfile" value=""> -->
+              <!-- </div>
+            </div> -->
+         
+            <!-- <div class="row mb-3">
+              <div class="col-sm-10">
+                <input type="submit" class="btn btn-primary" name="" value="Submit">
+              </div>
+            </div> -->
+
+          <!-- </form> -->
+
+
+        </div>
+        </div>
+      <!-- </div> -->
+      
+     
+    </div>
+  </section>
+
+</main>     
+
+{% endblock %}
+

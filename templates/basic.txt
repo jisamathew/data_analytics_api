@@ -1,0 +1,58 @@
+
+
+<div style="margin-left: 100px;">
+    <h1 >Python--Data Preprocessing Tool -Kottackal</h1>
+    
+
+    <div class="form">
+        <form class="" action="data" method="post">
+            <label>Read Dataset</label>
+            <input type="file" name="uploadfile" value="">
+            <input type="submit" name="" value="Submit">
+          </form>
+<br>
+<br>
+<br>
+
+    <form class="" action="preprocessing" method="post">
+        <label>Pre-Process Data: NAN</label>
+        <input type="file" name="preprocessing" value="">
+        <input type="submit" name="" value="Submit">
+    </form>
+
+<br>
+<br>
+<br>
+
+<form class="" action="preprocessingdrop" method="post">
+    <label>Pre-Process Data: Drop  Row/Column</label>
+    <input type="file" name="preprocessingdrop" value="">
+    <input type="submit" name="" value="Submit">
+</form>
+
+
+<br>
+<br>
+<br>
+
+<form class="" action="barch" method="post">
+    <label>Generate Bar Chart Based on fields</label>
+    <input type="file" name="barch" value="">
+    <input type="submit" name="" value="Submit">
+</form>
+
+
+<br>
+<br>
+<br>
+
+<form class="" action="barchC" method="post">
+    <label>Generate Bar Chart Based on Country</label>
+    <input type="file" name="barchC" value="">
+    <input type="submit" name="" value="Submit">
+</form>
+         
+    </div>
+<br> <br>
+
+</div>

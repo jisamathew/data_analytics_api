@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Data Preprocessing Tool -Kottackal</title>
+{% endblock %}
+
+{% block body %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>KYC Based Fraudulant and Data Checking</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item active">Dataset</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+
+
+
+
+      <!-- join -->
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Fraudulent History</h5>
+
+                    <table class="table table-hover">
+                        
+                        <thead>
+                            <tr>
+                                <td>
+                                  ipfs
+                                </td>
+                                <td>
+                                  consignee
+                                </td>
+                                <td>
+                                  orderId 
+                                </td>
+                                <td>
+                                  quantity
+                              </td>
+                              <td>
+                                orderDetails
+                              </td>
+                              <td>
+                                seller
+                              </td>
+                              <td>
+                                date
+                              </td>
+                              <td>
+                                consignee_Wallet
+                              </td>
+                              <td>
+                                seller_wallet
+                              </td>
+                              <td>
+                                lei
+                              </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tx2 in docs %}
+                            <tr>
+                                <td>
+                                  {{tx2.ipfs}}
+                                </td>
+                                <td>
+                                  {{tx2.consignee}}
+                                </td>
+                                <td>
+                                  {{tx2.orderId}}
+                                </td>
+                                <td>
+                                  {{tx2.quantity}}
+                                </td>
+                                <td>
+                                  {{tx2.orderDetails}}
+                                </td>
+                                <td>
+                                  {{tx2.seller}}
+                                </td>
+                                <td>
+                                  {{tx2.date}}
+                                </td>
+                                <td>
+                                  {{tx2.consignee_Wallet}}
+                                </td>
+                                <td>
+                                  {{tx2.seller_wallet}}
+                                </td>
+                                <td>
+                                  {{tx2.lei}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- join end -->
+
+
+    </section>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,459 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Data Preprocessing Tool -Kottackal</title>
+{% endblock %}
+
+{% block body %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>KYC Based Fraudulant and Data Checking</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item active">Dataset</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+
+      <!-- Screenshot of data from DB -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Database Table data</h5>
+
+                        <table class="table table-hover">
+                            
+                            <thead>
+                                <tr>
+                                    <td>
+                                        LEI
+                                    </td>
+                                    <td>
+                                        Country
+                                    </td>
+                                    <td>
+                                        Name
+                                    </td>
+                                    <td>
+                                        Wallet
+                                    </td>
+                                    <td>
+                                        IPFS
+                                    </td>
+                                    <td>
+                                        Date
+                                    </td>
+                                    <td>
+                                        Contact
+                                    </td>
+                                    <td>
+                                        Email
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for table in todos %}
+                                <tr>
+                                    <td>
+                                        {{table.lei}}
+                                    </td>
+                                    <td>
+                                        {{table.country}}
+                                    </td>
+                                    <td>
+                                        {{table.name}}
+                                    </td>
+                                    <td>
+                                        {{table.wallet}}
+                                    </td>
+                                    <td>
+                                        {{table.ipfs}}
+                                    </td>
+                                    <td>
+                                        {{table.date}}
+                                    </td>
+                                    <td>
+                                        {{table.contact}}
+                                    </td>
+                                    <td>
+                                        {{table.email}}
+                                    </td>
+                                </tr>
+                                <!-- {{ table|safe }} -->
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+      <!-- end screenshot -->
+
+      <!-- LEI error data table -->
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">LEI ERROR DATA</h5>
+
+                      <table class="table table-hover">
+                          
+                          <thead>
+                              <tr>
+                                  <td>
+                                    LEI
+                                  </td>
+                                  <td>
+                                    Status
+                                  </td>
+                                  <td>
+                                      Email
+                                  </td>
+                                  <td>
+                                    Wallet Address
+                                </td>
+                                <td>
+                                  KYC Date
+                                </td>
+                                <td>
+                                  Checking Date
+                                </td>
+                                  
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for lei in leiIssue %}
+                              <tr>
+                                  <td>
+                                    {{lei.lei}}
+                                  </td>
+                                  <td>
+                                    {{lei.status}}
+                                  </td>
+                                  <!-- <td>
+                                    {{lei.country}}
+                                  </td> -->
+                                  <td>
+                                      {{lei.email}}
+                                  </td>
+                                  <td>
+                                    {{lei.wallet}}
+                                </td>
+                                <td>
+                                  {{lei.kycreg}}
+                                </td>
+                                <td>
+                                  {{lei.checkDate}}
+                                </td>
+                                 
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+          </div>
+        </div>
+      <!-- end lei error data table -->
+
+      <!-- Fraudulant transaction history table -->
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Fraudulant Transaction History</h5>
+
+                    <table class="table table-hover">
+                        
+                        <thead>
+                            <tr>
+                                <td>
+                                  OrderNo
+                                </td>
+                                <td>
+                                  Order Date
+                                </td>
+                                <td>
+                                    Wallet 
+                                </td>
+                                <td>
+                                  LEI
+                              </td>
+                              <td>
+                                KYC Date
+                              </td>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tx in txhistory %}
+                            <tr>
+                                <td>
+                                  {{tx.orderId}}
+                                </td>
+                                <td>
+                                  {{tx.orderdate}}
+                                </td>
+                                <td>
+                                  {{tx.seller_wallet}}
+                                </td>
+                                <td>
+                                    {{tx.lei}}
+                                </td>
+                                <td>
+                                  {{tx.kycdate}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- end fraudulant tale -->
+
+      <!-- join -->
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">join History</h5>
+                    <div style="overflow-x:auto;">
+
+                    <table class="table table-hover">
+                        
+                        <thead>
+                            <tr>
+                                <td>
+                                  ipfs
+                                </td>
+                                <td>
+                                  consignee
+                                </td>
+                                <td>
+                                  orderId 
+                                </td>
+                                <td>
+                                  quantity
+                              </td>
+                              <td>
+                                orderDetails
+                              </td>
+                              <td>
+                                seller
+                              </td>
+                              <td>
+                                date
+                              </td>
+                              <!-- <td>
+                                consignee_Wallet
+                              </td>
+                              <td>
+                                seller_wallet
+                              </td> -->
+                              <td>
+                                lei
+                              </td>
+                              <td>
+                                check
+                              </td>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tx2 in docs %}
+                            <tr>
+                                <!-- <td>
+                                  {{tx2["country"]}}
+                                </td> -->
+                                <td>
+                                  {{tx2.ipfs}}
+                                </td>
+                                <td>
+                                  {{tx2.com.consignee}}
+                                </td>
+                                <td>
+                                  {{tx2.com.orderId}}
+                                </td>
+                                <td>
+                                  {{tx2.com.quantity}}
+                                </td>
+                                <td>
+                                  {{tx2.com.orderDetails}}
+                                </td>
+                                <td>
+                                  {{tx2.com.seller}}
+                                </td>
+                                <td>
+                                  {{tx2.com.date}}
+                                </td>
+                                <!-- <td>
+                                  {{tx2.com.consignee_Wallet}}
+                                </td>
+                                <td>
+                                  {{tx2.com.seller_wallet}}
+                                </td> -->
+                                <td>
+                                  {{tx2.lei}}
+                                </td>
+                                <td>
+                                  <form action="secondorder" method="GET">
+                                    <input id="historicalId" name="historicalId" type="hidden" value={{tx2.lei}}>
+                                    <button type="submit"> History </button>
+                                </form>
+                                </td>
+                               
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- join end -->
+        <div class="row">
+            
+               <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">List of Operations Available</h5>
+
+              <!-- Accordion without outline borders -->
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Pre-Process Data: NAN
+                    </button>
+                  </h2>
+                  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form action="preprocessing" method="post">
+            
+                            <div class="row mb-3">
+                              <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                              <div class="col-sm-6">
+                                <input class="form-control" type="file" name="preprocessing" value="">
+                              </div>
+                            </div>
+                         
+                            <div class="row mb-3">
+                              <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+
+                              <div class="col-sm-10">
+                                <input type="submit" class="btn btn-primary" name="" value="Submit">
+                              </div>
+                            </div>
+                
+                          </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Pre-Process Data: Drop  Row/Column
+                    </button>
+                  </h2>
+                  <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form action="preprocessingdrop" method="post">
+            
+                            <div class="row mb-3">
+                              <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                              <div class="col-sm-10">
+                                <input class="form-control" type="file" name="preprocessingdrop" value="">
+                              </div>
+                            </div>
+                         
+                            <div class="row mb-3">
+                              <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+                              <div class="col-sm-10">
+                                <input type="submit" class="btn btn-primary" name="" value="Submit">
+                              </div>
+                            </div>
+                
+                          </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Generate Bar Chart Based on fields
+                    </button>
+                  </h2>
+                  <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <form action="barch" method="post">
+            
+                            <div class="row mb-3">
+                              <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                              <div class="col-sm-10">
+                                <input class="form-control" type="file" name="barch" value="">
+                              </div>
+                            </div>
+                         
+                            <div class="row mb-3">
+                                <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+                              <div class="col-sm-10">
+                                <input type="submit" class="btn btn-primary" name="" value="Submit">
+                              </div>
+                            </div>
+                
+                          </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+                          Generate Bar Chart Based on Country
+                      </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                          <form action="barchC" method="post">
+              
+                              <div class="row mb-3">
+                                <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                                <div class="col-sm-6">
+                                  <input class="form-control" type="file" name="barchC" value="">
+                                </div>
+                              </div>
+                           
+                              <div class="row mb-3">
+                                <label for="inputNumber" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                  <input type="submit" class="btn btn-primary" name="" value="Submit">
+                                </div>
+                              </div>
+                  
+                            </form>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

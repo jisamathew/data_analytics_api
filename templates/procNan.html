@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Python Flask Data Preprocessing Tool -Kottackal</title>
+{% endblock %}
+
+{% block body %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Python Flask Data Preprocessing Tool -Kottackal</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item active">Dataset</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Snapshot of dataset(5 rows)</h5>
+
+                        <table class="table table-hover">
+                            {% for table in tables %}
+                            <thead>
+                                <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ table|safe }}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">List of Data Fields</h5>
+
+                        <ol class="list-group list-group-numbered">
+                            {% for column in col%}
+                            <li class="list-group-item">{{column}}</li>
+                            {% endfor%}
+                        </ol>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">With Checkboxes and radios</h5>
+    
+                 
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      First checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Second checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Third checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Fourth checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Fifth checkbox
+                    </li>
+                  </ul>>
+    
+                </div>
+              </div>
+        </div>
+        
+      </div> -->
+
+    </section>
+
+</main>
+
+{% endblock %}
