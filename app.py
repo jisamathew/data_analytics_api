@@ -135,10 +135,99 @@ class Square(Resource):
 		return jsonify({'square': num**2})
 
 
+# end point for LEI WITH COUNTRIES
+
+class Transactions(Resource):
+    def get(self):
+        data = 'dt'
+        saved_todos = list(todos.find())
+        get_transactions = list(transaction.find())
+        lei = []
+        wallet_tx = []
+        trans_hist = []
+        for d in saved_todos:
+            if(d.get("lei") == ""):
+                if(d.get("country").upper() in countries):
+                    print("exists")
+                    country="Discrepancy"
+                    score_titles = {"status":"LEI NOT ADDED BY USER","lei": "NA", "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
+                    lei.append(score_titles)
+            else:
+                URL = "https://api.gleif.org/api/v1/lei-records?page[size]=10&page[number]=1&filter[lei]="+d.get("lei")
+                response_API = requests.get(URL)
+                data = response_API.text
+                parse_json = json.loads(data)
+                active_case = parse_json['data']     
+                if(d.get("country").upper() in countries):
+                    if not active_case:
+                        today = date.today()
+                        score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
+                        lei.append(score_titles)
+                        print("exists")
+                    else:
+                        for i in active_case:
+                        # today = date.today()
+                            print(i['attributes']['entity']['status'])
+                            leist = i['attributes']['entity']['status']  
+                            score_titles = {"status":leist,"lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
+                            lei.append(score_titles)  
+                else:
+                    print("lei not exists p + country not present")
+
+                # URL = "https://api.gleif.org/api/v1/lei-records?page[size]=10&page[number]=1&filter[lei]="+d.get("lei")
+                # response_API = requests.get(URL)
+                # data = response_API.text
+                # parse_json = json.loads(data)
+                # active_case = parse_json['data']
+                # if not active_case:
+                #     today = date.today()
+                #     score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                #     lei.append(score_titles)
+                # else:
+                #     print("")      
+        return  Response(json.dumps(lei,default=str),mimetype="application/json")
+
+
+# endpoint for KYC
+
+class KYC(Resource):
+    def get(self):
+        data = 'dt'
+        saved_todos = list(todos.find())
+        lei = []
+        for d in saved_todos:
+            # print(d.get("lei"))
+            if(d.get("lei") == ""):
+                today = date.today()
+                score_titles = {"status":"NOT ADDED BY USER","lei": "NA", "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                lei.append(score_titles)
+            else:
+                URL = "https://api.gleif.org/api/v1/lei-records?page[size]=10&page[number]=1&filter[lei]="+d.get("lei")
+                response_API = requests.get(URL)
+                data = response_API.text
+                parse_json = json.loads(data)
+                active_case = parse_json['data']
+                if not active_case:
+                    today = date.today()
+                    score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                    lei.append(score_titles)
+                else:
+                    for i in active_case:
+                        today = date.today()
+                        print(i['attributes']['entity']['status'])
+                        leist = i['attributes']['entity']['status']
+                        score_titles = {"status":leist,"lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                        lei.append(score_titles)
+        print(lei)        
+        return  Response(json.dumps(lei,default=str),mimetype="application/json")
+
+
 # adding the defined resources along with their corresponding urls
 api.add_resource(Hello, '/')
 api.add_resource(Square, '/square/<int:num>')
 api.add_resource(DBT,'/getDB')
+api.add_resource(KYC,'/kyc')
+api.add_resource(Transactions,'/getTransactions')
 
 # driver function
 if __name__ == '__main__':
