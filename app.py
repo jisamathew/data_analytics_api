@@ -150,7 +150,7 @@ class Transactions(Resource):
                 if(d.get("country").upper() in countries):
                     print("exists")
                     country="Discrepancy"
-                    score_titles = {"status":"LEI NOT ADDED BY USER","lei": "NA", "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
+                    score_titles = {"status":"LEI NOT ADDED BY USER","lei": "NA","name":d.get("name"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
                     lei.append(score_titles)
             else:
                 URL = "https://api.gleif.org/api/v1/lei-records?page[size]=10&page[number]=1&filter[lei]="+d.get("lei")
@@ -161,7 +161,7 @@ class Transactions(Resource):
                 if(d.get("country").upper() in countries):
                     if not active_case:
                         today = date.today()
-                        score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
+                        score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"),"name":d.get("name"),"email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
                         lei.append(score_titles)
                         print("exists")
                     else:
@@ -169,7 +169,7 @@ class Transactions(Resource):
                         # today = date.today()
                             print(i['attributes']['entity']['status'])
                             leist = i['attributes']['entity']['status']  
-                            score_titles = {"status":leist,"lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
+                            score_titles = {"status":leist,"lei": d.get("lei"),"name":d.get("name"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
                             lei.append(score_titles)  
                 else:
                     print("lei not exists p + country not present")
@@ -199,7 +199,7 @@ class KYC(Resource):
             # print(d.get("lei"))
             if(d.get("lei") == ""):
                 today = date.today()
-                score_titles = {"status":"NOT ADDED BY USER","lei": "NA", "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                score_titles = {"status":"NOT ADDED BY USER","lei": "NA","name":d.get("name"),"email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
                 lei.append(score_titles)
             else:
                 URL = "https://api.gleif.org/api/v1/lei-records?page[size]=10&page[number]=1&filter[lei]="+d.get("lei")
@@ -209,14 +209,14 @@ class KYC(Resource):
                 active_case = parse_json['data']
                 if not active_case:
                     today = date.today()
-                    score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                    score_titles = {"status":"LEI NOT FOUND","lei": d.get("lei"),"name":d.get("name"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
                     lei.append(score_titles)
                 else:
                     for i in active_case:
                         today = date.today()
                         print(i['attributes']['entity']['status'])
                         leist = i['attributes']['entity']['status']
-                        score_titles = {"status":leist,"lei": d.get("lei"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
+                        score_titles = {"status":leist,"lei": d.get("lei"),"name":d.get("name"),"email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
                         lei.append(score_titles)
         print(lei)        
         return  Response(json.dumps(lei,default=str),mimetype="application/json")
