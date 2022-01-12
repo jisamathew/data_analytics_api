@@ -149,7 +149,7 @@ class Transactions(Resource):
             if(d.get("lei") == ""):
                 if(d.get("country").upper() in countries):
                     print("exists")
-                    # country="Discrepancy"
+                    country="Discrepancy"
                     # score_titles = {"status":"LEI NOT ADDED BY USER","lei": "NA","name":d.get("name"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
                     # lei.append(score_titles)
             else:
@@ -198,8 +198,8 @@ class KYC(Resource):
         for d in saved_todos:
             # print(d.get("lei"))
             if(d.get("lei") == ""):
-                print("not added")
                 # today = date.today()
+                print("not added by user")
                 # score_titles = {"status":"NOT ADDED BY USER","lei": "NA","name":d.get("name"),"email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id")}
                 # lei.append(score_titles)
             else:
