@@ -228,7 +228,8 @@ api.add_resource(Hello, '/')
 api.add_resource(Square, '/square/<int:num>')
 api.add_resource(DBT,'/getDB')
 api.add_resource(KYC,'/kyc')
-api.add_resource(Transactions,'/getTransactions')
+# api.add_resource(Transactions,'/getTransactions/<string:lei>')
+# api.add_resource(Transactions2,'/getTransactions2')
 
 # driver function
 if __name__ == '__main__':

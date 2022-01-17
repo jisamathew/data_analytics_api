@@ -223,12 +223,47 @@ class KYC(Resource):
         return  Response(json.dumps(lei,default=str),mimetype="application/json")
 
 
+
+# endpoint for Transaction history based on a single LEI
+class SecondOrder(Resource):
+    def get(self):
+        get_transactions = list(transaction.find())
+        lei = []
+        sec_his = []
+        print('Book ID: ',request.args.get('historicalId'))
+        leiNO = request.args.get('historicalId')
+        for j in get_transactions:
+            if((j.get("lei") == leiNO)):    
+                sec_his.append({"consignee":j.get("consignee"),"quantity":j.get("quantity"),"orderDetails":j.get("orderDetails"), "orderId":j.get("orderId"),"orderdate":j.get("date")})
+        print(sec_his)   
+        # print(lei)        
+        return  Response(json.dumps(sec_his,default=str),mimetype="application/json")
+
+class SecondOrder2(Resource):
+    def get(self,lei):
+        get_transactions = list(transaction.find())
+        # lei = []
+        sec_his = []
+        print('Book ID: ',lei)
+        leiNO = lei
+        for j in get_transactions:
+            if((j.get("lei") == leiNO)):    
+                sec_his.append({"consignee":j.get("consignee"),"quantity":j.get("quantity"),"orderDetails":j.get("orderDetails"), "orderId":j.get("orderId"),"orderdate":j.get("date")})
+        print(sec_his)   
+        # print(lei)        
+        return  Response(json.dumps(sec_his,default=str),mimetype="application/json")
+
+
+
 # adding the defined resources along with their corresponding urls
 api.add_resource(Hello, '/')
 api.add_resource(Square, '/square/<int:num>')
 api.add_resource(DBT,'/getDB')
 api.add_resource(KYC,'/kyc')
 api.add_resource(Transactions,'/getTransactions')
+api.add_resource(SecondOrder,'/history')
+api.add_resource(SecondOrder2,'/getHistory/<string:lei>')
+
 
 # driver function
 if __name__ == '__main__':
