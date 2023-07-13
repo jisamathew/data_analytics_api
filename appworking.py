@@ -86,7 +86,21 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
 
-app.config['MONGO_URI'] = 'mongodb+srv://flask:flask@cluster0.zjwhk.mongodb.net/flaskpython?retryWrites=true&w=majority'
+app.config['MONGO_URI'] =  "mongodb+srv://jisa:jisa@cluster0.jfbx4.mongodb.net/flask?retryWrites=true&w=majority"
+
+# 'mongodb+srv://flask:flask@cluster0.zjwhk.mongodb.net/flaskpython?retryWrites=true&w=majority'
+from pymongo.mongo_client import MongoClient
+uri = "mongodb+srv://jisa:jisa@cluster0.jfbx4.mongodb.net/flask?retryWrites=true&w=majority"
+
+# Create a new client and connect to the server
+client = MongoClient(uri)
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
 mongo = PyMongo(app)
 todos = mongo.db.flaskpython
 

@@ -1,0 +1,28 @@
+//for multiple orders
+{
+  "_id": { "$oid": "64af214438ec39f6962f4b14" },
+  "status": "ACTIVE",
+  "lei": "213800FYKL65AXOPRM95",
+  "name": "OW Marine Parts Ltd",
+  "checkDate": { "$date": { "$numberLong": "1639506600000" } },
+  "email": "owmparts@gmail.com",
+  "kycreg": "",
+  "wallet": "",
+  "country": "South Korea",
+  "order": [
+    {
+      "consignee": "Peter",
+      "orderId": "ORD167020",
+      "quantity": "2",
+      "orderDetails": "Mercruiser T89",
+      "date": "2019-04-20"
+    },
+    {
+      "consignee": "Mike",
+      "orderId": "ORD25745",
+      "quantity": "1",
+      "orderDetails": "Genset 35",
+      "date": "2020-05-02"
+    }
+  ]
+}

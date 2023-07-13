@@ -14,8 +14,24 @@ app = Flask(__name__)
 CORS(app)
 # creating an API object
 api = Api(app)
-app.config['MONGO_URI'] = 'mongodb+srv://flask:flask@cluster0.zjwhk.mongodb.net/flaskpython?retryWrites=true&w=majority'
+#app.config['MONGO_URI'] = 'mongodb+srv://flask:flask@cluster0.zjwhk.mongodb.net/flaskpython?retryWrites=true&w=majority'
+
+# from pymongo.mongo_client import MongoClient
+
+# uri = "mongodb+srv://flaskpython:flaskpython@cluster0.jfbx4.mongodb.net/?retryWrites=true&w=majority"
+
+# # Create a new client and connect to the server
+# client = MongoClient(uri)
+
+# # Send a ping to confirm a successful connection
+# try:
+#     client.admin.command('ping')
+#     print("Pinged your deployment. You successfully connected to MongoDB!")
+# except Exception as e:
+#     print(e)
+app.config['MONGO_URI'] = "mongodb+srv://flaskpython:flaskpython@cluster0.jfbx4.mongodb.net/flask?retryWrites=true&w=majority"
 mongo = PyMongo(app)
+print(mongo)
 
 todos = mongo.db.flaskpython
 transaction = mongo.db.transaction_hist
@@ -142,10 +158,13 @@ class Transactions(Resource):
         data = 'dt'
         saved_todos = list(todos.find())
         get_transactions = list(transaction.find())
+        # print(get_transactions)
+        # print(saved_todos)
         lei = []
         wallet_tx = []
         trans_hist = []
         for d in saved_todos:
+            print(d)
             if(d.get("lei") == ""):
                 if(d.get("country").upper() in countries):
                     print("exists")
@@ -157,7 +176,10 @@ class Transactions(Resource):
                 response_API = requests.get(URL)
                 data = response_API.text
                 parse_json = json.loads(data)
-                active_case = parse_json['data']     
+                active_case = parse_json['data'] 
+                print('in else')
+                print(active_case)
+                print(d.get("country"))    
                 if(d.get("country").upper() in countries):
                     if not active_case:
                         today = date.today()
@@ -166,7 +188,7 @@ class Transactions(Resource):
                         print("exists")
                     else:
                         for i in active_case:
-                        # today = date.today()
+                            # today = date.today()
                             print(i['attributes']['entity']['status'])
                             leist = i['attributes']['entity']['status']  
                             score_titles = {"status":leist,"lei": d.get("lei"),"name":d.get("name"), "email": d.get("email"),"wallet":d.get("wallet"),"kycreg":d.get("date"),"checkDate":str(today),"mongoID":d.get("_id"),"country":"Un-Authorized","cname":d.get("country")}
@@ -245,13 +267,62 @@ class SecondOrder2(Resource):
         # lei = []
         sec_his = []
         print('Book ID: ',lei)
+        print('getTransactions')
+        print(get_transactions)
         leiNO = lei
         for j in get_transactions:
-            if((j.get("lei") == leiNO)):    
-                sec_his.append({"consignee":j.get("consignee"),"quantity":j.get("quantity"),"orderDetails":j.get("orderDetails"), "orderId":j.get("orderId"),"orderdate":j.get("date")})
+            print('j :',j)
+            print(leiNO)
+            if((j.get("lei") == leiNO)):  
+                print(j.get('order')) 
+                orderData = j.get('order')
+                for k in orderData:
+                    sec_his.append({"consignee":k.get("consignee"),"quantity":k.get("quantity"),"orderDetails":k.get("orderDetails"), "orderId":k.get("orderId"),"orderdate":k.get("date")})
         print(sec_his)   
         # print(lei)        
         return  Response(json.dumps(sec_his,default=str),mimetype="application/json")
+# jisa-view array value
+# class SecondOrder3(Resource):
+#     def get(self,lei):
+#         get_transactions = list(transaction.find())
+#         # lei = []
+#         sec_his = []
+#         print('Book ID: ',lei)
+#         print('getTransactions')
+#         print(get_transactions)
+#         leiNO = lei
+#         for j in get_transactions:
+#             print('j :',j)
+#             print(leiNO)
+#             if((j.get("lei") == leiNO)):   
+#                 for k in  j.get("order"):
+#                 sec_his.append({"consignee":k.get("consignee"),"quantity":k.get("quantity"),"orderDetails":k.get("orderDetails"), "orderId":k.get("orderId"),"orderdate":k.get("date")})
+#         print(sec_his)   
+#         # print(lei)        
+#         return  Response(json.dumps(sec_his,default=str),mimetype="application/json")
+
+# checks if an LEI is valid or not using GLEIF API
+class LEISingleCheck(Resource):
+    def get(self,lei):
+        leiNO = lei
+        URL = "https://api.gleif.org/api/v1/lei-records?page[size]=10&page[number]=1&filter[lei]="+lei
+        response_API = requests.get(URL)
+        data = response_API.text
+        parse_json = json.loads(data)
+        active_case = parse_json['data']
+        if not active_case:
+            today = date.today()
+            score_titles = {"status":"LEI NOT FOUND","lei": lei,"checkDate":str(today)}
+            lei.append(score_titles)
+        else:
+            for i in active_case:
+                today = date.today()
+                print(i['attributes']['entity']['status'])
+                leist = i['attributes']['entity']['status']
+                score_titles = {"status":leist,"lei": lei,"checkDate":str(today)}
+                lei.append(score_titles)
+        # print(lei)        
+        return  Response(json.dumps(lei,default=str),mimetype="application/json")
 
 
 
@@ -263,6 +334,7 @@ api.add_resource(KYC,'/kyc')
 api.add_resource(Transactions,'/getTransactions')
 api.add_resource(SecondOrder,'/history')
 api.add_resource(SecondOrder2,'/getHistory/<string:lei>')
+api.add_resource(LEISingleCheck,'/getLEI/<string:lei>')
 
 
 # driver function
