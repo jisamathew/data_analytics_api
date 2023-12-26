@@ -277,7 +277,7 @@ class SecondOrder2(Resource):
                 print(j.get('order')) 
                 orderData = j.get('order')
                 for k in orderData:
-                    sec_his.append({"consignee":k.get("consignee"),"quantity":k.get("quantity"),"orderDetails":k.get("orderDetails"), "orderId":k.get("orderId"),"orderdate":k.get("date")})
+                    sec_his.append({"consignee":k.get("consignee"),"quantity":k.get("quantity"),"orderDetails":k.get("orderDetails"), "orderId":k.get("orderId"),"orderdate":k.get("date"),"origin":k.get("origin"),"destination":k.get("destination"),"eccstatus":k.get("eccstatus")})
         print(sec_his)   
         # print(lei)        
         return  Response(json.dumps(sec_his,default=str),mimetype="application/json")
