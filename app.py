@@ -256,7 +256,7 @@ class SecondOrder(Resource):
         leiNO = request.args.get('historicalId')
         for j in get_transactions:
             if((j.get("lei") == leiNO)):    
-                sec_his.append({"consignee":j.get("consignee"),"quantity":j.get("quantity"),"orderDetails":j.get("orderDetails"), "orderId":j.get("orderId"),"orderdate":j.get("date")})
+                sec_his.append({"consignee":k.get("consignee"),"quantity":k.get("quantity"),"orderDetails":k.get("orderDetails"), "orderId":k.get("orderId"),"orderdate":k.get("date"),"origin":k.get("origin"),"destination":k.get("destination"),"eccstatus":k.get("eccstatus")})  
         print(sec_his)   
         # print(lei)        
         return  Response(json.dumps(sec_his,default=str),mimetype="application/json")
